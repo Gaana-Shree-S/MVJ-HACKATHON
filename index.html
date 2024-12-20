@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Miniver&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Prediction</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .image-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        .image-container img {
+            width: 350px; /* Increased width */
+            height: 200px; /* Increased height */
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .button-container .btn {
+            display: block;
+            margin-bottom: 10px; /* Added gap between buttons */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar section-content">
+            <a href="#" class="nav-logo">
+                <h1 class="logo-text">  </h1> 
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about-us" class="nav-link">Technology</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact-us" class="nav-link">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="hero-section">
+            <div class="section-content">
+                <div class="hero-details">
+                    <h2 class="title">Disaster Prediction: A New Era of Safety</h2>
+                    <h3 class="subtitle">Harnessing Technology to Predict and Mitigate Natural Disasters</h3>
+                    <p class="description"> We live in a world where natural disasters can strike without warning, causing widespread devastation. Through the power of advanced technologies like machine learning, big data analysis, and predictive modeling, we can forecast and prepare for these events, saving lives and minimizing damage. </p>
+                    
+                    <p class="description1">This platform aims to provide accurate and timely predictions for various natural disasters, including earthquakes, tsunamis, hurricanes, floods, and wildfires. By analyzing historical data, environmental factors, and sensor data, we can predict disaster events and provide actionable insights to authorities and communities.</p>
+                </div>
+                <div class="hero-image-wrapper">
+                    <img src="https://tinypic.host/images/2024/12/19/hero.webp" alt="hero" border="0">
+                </div>
+            </div>
+         </section>
+
+        <!-- Technology Section -->
+        <section id="about-us" class="about-us-section">
+            <div class="section-content">
+                <div class="hero-details">
+                    <h3 class="subtitle">Innovative Approaches for Disaster Prediction</h3>
+                    <p class="description1"> 
+                        <b>Machine Learning</b> <br>
+                        Machine learning algorithms are used to analyze vast amounts of data, identifying patterns and anomalies that indicate the likelihood of a disaster. These algorithms continuously learn from new data, improving the accuracy of predictions.
+                    </p>
+
+                    <p class="description">
+                        <b>Big Data Analysis</b>
+                        By processing large datasets from sensors, satellites, and social media, we can detect early signs of disasters, such as sudden changes in environmental conditions, allowing us to issue early warnings and prevent loss of life.
+                    </p>
+
+                    <p class="description"> 
+                        <b>Satellite Monitoring</b> <br>
+                        Satellites provide real-time imagery and environmental data, allowing us to track hurricanes, wildfires, and other phenomena. These insights are crucial for providing timely warnings and ensuring efficient response efforts.
+                    </p>
+                </div>
+            </div>
+         </section>
+
+        <!-- Contact Section -->
+        <section id="contact-us" class="contact-us-section">
+            <div class="section-content">
+                <div class="hero-details">
+                    <h2 class="title">Contact</h2>
+                    <p class="description"> Emergency No: 112</p>
+                    <!-- Flex Buttons Section -->
+                    <div class="button-container">
+                        <button class="btn" onclick="window.location.href='index.html'">prediction of floods!</button>
+                        <button class="btn" onclick="window.location.href='index2.html'"> prediction of earthquakes!</button>
+                        <button class="btn" onclick="window.location.href='index3.html'">Click on this for SOS</button>
+                    </div>
+
+                    <!-- Images Section -->
+                    <div class="image-container">
+                        <img src="eq.jpg" alt="Earthquake">
+                        <img src="flooods.jpg" alt="Floods">
+                        <img src="soss.jpg" alt="SOS">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="section-content">
+            <h1> 
+                <p class="copyright">&copy; 2024 Disaster Prediction | All Rights Reserved.</p>
+            </h1>
+        </div>
+    </footer>
+
+    <!-- Add JavaScript for smooth scrolling behavior -->
+    <script>
+        // Prevent the menu bar from scrolling with the page
+        window.addEventListener('scroll', function() {
+            let navbar = document.querySelector('header');
+            if (window.scrollY > 0) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+</body>
+</html>
