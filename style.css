@@ -1,0 +1,197 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+:root {
+    /* Colors */
+    --white-color: #fff;
+    --dark-color: #000000;
+    --primary-color: #1c1c1c; /* Dark color for a serious tone */
+    --secondary-color: #ff4f58; /* Red color for disaster warnings */
+    --light-pink-color: #faf4f5;
+    --medium-gray-color: #ccc;
+
+    /* Font Size */
+    --font-size-s: 0.9rem;
+    --font-size-n: 1rem;
+    --font-size-m: 1.2rem;
+    --font-size-l: 1.5rem;
+    --font-size-xl: 2rem;
+    --font-size-xxl: 2.3rem;
+
+    /* Font Weight */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Border Radius */
+    --border-radius-s: 8px;
+    --border-radius-m: 30px;
+    --border-radius-circle: 50%;
+
+    /* Site max width */
+    --site-max-width: 1300px;
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+    background: var(--primary-color); /* Set background color to match primary */
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.section-content {
+    margin: 0 auto;
+    padding: 0 20px;
+    max-width: var(--site-max-width);
+}
+
+/* Navbar Styling */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+    background: var(--primary-color);
+    transition: top 0.3s ease; /* Smooth transition for the navbar */
+}
+
+header.scrolled {
+    top: -60px; /* Hide the navbar on scroll */
+}
+
+header .navbar {
+    display: flex;
+    padding: 5px 15px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar .nav-logo .logo-text {
+    color: var(--white-color);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+}
+
+.navbar .nav-menu {
+    display: flex;
+    gap: 10px;
+}
+
+.navbar .nav-menu .nav-link {
+    padding: 10px 18px;
+    color: var(--white-color);
+    font-size: var(--font-size-m);
+    background: var(--secondary-color);
+    border-radius: var(--border-radius-m);
+    transition: 0.5s ease;
+}
+
+.navbar .nav-menu .nav-link:hover {
+    color: var(--primary-color);
+    background: #ff9800;
+}
+
+/* Hero Section Styling */
+.hero-section {
+    min-height: 100vh;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+}
+
+.hero-section .section-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: var(--site-max-width);
+    width: 100%;
+    gap: 20px;
+}
+
+.hero-section .hero-details {
+    max-width: 50%;
+}
+
+.hero-section .hero-details .title {
+    font-size: var(--font-size-xxl);
+    color: var(--secondary-color);
+    font-family: "Miniver", sans-serif;
+}
+
+.hero-details .subtitle {
+    color: var(--white-color);
+    margin-top: 8px;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+}
+
+.hero-details .description {
+    font-size: var(--font-size-m);
+    margin: 20px 0;
+    color: var(--white-color);
+}
+
+.hero-details .description1 {
+    font-size: var(--font-size-m);
+    color: var(--secondary-color);
+    margin: 24px 0 40px;
+}
+
+.copyright {
+    font-size: var(--font-size-m);
+    color: var(--white-color);
+    margin: 24px 0 40px;
+}
+
+.hero-image-wrapper {
+    width: 500px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+/* Contact Section */
+.button-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.button-container .btn {
+    background: var(--secondary-color);
+    color: var(--white-color);
+    padding: 15px 30px;
+    font-size: var(--font-size-m);
+    border-radius: var(--border-radius-m);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button-container .btn:hover {
+    background: #ff9800;
+}
