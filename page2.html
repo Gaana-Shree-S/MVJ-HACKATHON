@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flood Prediction</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Miniver&family=Poppins:wght@400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        :root {
+            --primary-color: #e0f7fa; /* Light sea blue */
+            --secondary-color: #8b4513; /* Dirt brown */
+            --accent-color: #a0522d; /* Saddle brown */
+
+            --white-color: #ffffff;
+            --dark-color: #000000;
+            --border-radius: 8px;
+            --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background: var(--primary-color);
+            color: var(--dark-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            min-height: 100vh;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        header {
+            width: 100%;
+            background: var(--secondary-color);
+            padding: 20px;
+            text-align: center;
+            color: var(--white-color);
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        main {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            background: var(--white-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transform: scale(1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        main:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 20px 0;
+            background: var(--secondary-color);
+            color: var(--white-color);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: var(--box-shadow);
+        }
+
+        button:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        #map {
+            width: 100%;
+            height: 400px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .result.severe {
+            color: #ff4f58;
+            background: rgba(255, 79, 88, 0.1);
+        }
+
+        .result.warning {
+            color: #ff9800;
+            background: rgba(255, 152, 0, 0.1);
+        }
+
+        .result.alert {
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .result.no-warning {
+            color: var(--secondary-color);
+            background: rgba(0, 121, 107, 0.1);
+        }
+
+        .result:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+    <header>
+        Earthquake Prediction System
+    </header>
+    <main>
+        <h2>Predict Earthquake Risk</h2>
+        <button id="locateBtn">Locate Me</button>
+        <p id="message"></p>
+        <div id="map"></div>
+        <div class="result" id="result"></div>
+    </main>
+    <script>
+        const map = L.map('map').setView([20.5937, 78.9629], 5);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        let marker;
+
+        document.getElementById('locateBtn').addEventListener('click', () => {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = '';
+
+            navigator.geolocation.getCurrentPosition((position) => {
+                const { latitude, longitude } = position.coords;
+                map.setView([latitude, longitude], 13);
+
+                if (marker) {
+                    map.removeLayer(marker);
+                }
+
+                marker = L.marker([latitude, longitude]).addTo(map)
+                    .bindPopup('Your Location').openPopup();
+
+                fetchFloodRisk(latitude, longitude);
+            }, () => {
+                alert('Unable to retrieve your location');
+            });
+        });
+
+        async function fetchFloodRisk(latitude, longitude) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Fetching flood risk...';
+
+            try {
+                const apiUrl = `https://api.example.com/flood-risk?lat=${latitude}&lon=${longitude}`; // Replace with actual API
+
+                const response = await fetch(apiUrl);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch flood data');
+                }
+
+                const data = await response.json();
+
+                if (data && data.floodStatus) {
+                    const floodStatus = data.floodStatus;
+                    let riskLevelClass = '';
+
+                    if (floodStatus === 'Severe') {
+                        riskLevelClass = 'severe';
+                    } else if (floodStatus === 'Warning') {
+                        riskLevelClass = 'warning';
+                    } else if (floodStatus === 'Alert') {
+                        riskLevelClass = 'alert';
+                    } else {
+                        riskLevelClass = 'no-warning';
+                    }
+
+                    resultDiv.textContent = `earthquakes Status: ${floodStatus}`;
+                    resultDiv.className = `result ${riskLevelClass}`;
+                } else {
+                    resultDiv.textContent = 'No earthquakes data available for your location.';
+                    resultDiv.className = 'result no-warning';
+                }
+            } catch (error) {
+                console.error(error);
+                resultDiv.textContent = 'No earthquakes at your location.';
+                resultDiv.className = 'result no-warning';
+            }
+        }
+    </script>
+</body>
+</html>
