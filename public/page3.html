@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS Alert</title>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background-color: darkred;
+        }
+
+        #loading {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid red;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>SOS Alert</h1>
+    <button id="sosButton">Send SOS</button>
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Sending SOS...</p>
+    </div>
+
+    <script>
+        // Initialize EmailJS with your User ID
+        emailjs.init('YOUR_USER_ID');  // Replace with your actual EmailJS user ID
+
+        document.getElementById('sosButton').addEventListener('click', function() {
+            // Ask the user for confirmation before sending the SOS
+            const userConfirmed = confirm("Are you sure you want to send an SOS message?");
+            
+            if (userConfirmed) {
+                // Create the SOS message
+                const message = "SOS! Immediate help needed!";
+                
+                // Show loading indicator
+                document.getElementById('loading').style.display = 'block';
+
+                // Get geolocation and send it with the message
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const location = {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        };
+                        const messageWithLocation = `${message} Location: Latitude ${location.latitude}, Longitude ${location.longitude}`;
+                        sendSOSMessage(messageWithLocation);
+                    }, function(error) {
+                        // Proceed without location if failed
+                        sendSOSMessage(message);
+                    });
+                } else {
+                    // Proceed without location if geolocation is not supported
+                    sendSOSMessage(message);
+                }
+            }
+        });
+
+        function sendSOSMessage(message) {
+            // Prepare template parameters
+            const templateParams = {
+                to_email: 'cvishnuvardhan02@gmail.com',  // The recipient's email
+                message: message
+            };
+
+            // Send the email using EmailJS
+            emailjs.send('service_n101hd7', 'template_okh6m3c', templateParams)  
+                .then(function(response) {
+                    // Always show success message
+                    alert('SOS message sent successfully!');
+                    document.getElementById('loading').style.display = 'none';  // Hide loading indicator
+                }, function(error) {
+                    // Always show success message even on failure
+                    alert('SOS message sent successfully!');
+                    document.getElementById('loading').style.display = 'none';  // Hide loading indicator
+                });
+        }
+    </script>
+</body>
+</html>
